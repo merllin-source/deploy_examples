@@ -1,9 +1,36 @@
-addEventListener("fetch", (event) => {
-  // Get the value of the header named `x-forwarded-for`.
-  // The value can either be a IPv4 or IPv6 address.
-  const ip = event.request.headers.get("x-forwarded-for");
-  const response = new Response(`Your IP address is <b>${ip}</b>`, {
-    headers: { "content-type": "text/html" },
-  });
-  event.respondWith(response);
+import {
+  json,
+  serve,
+  validateRequest,
+} from "https://deno.land/x/sift@0.1.7/mod.ts";
+
+serve({
+  "/quotes": handleQuotes,
 });
+
+// To get started, let's just use a global array of quotes.
+const quotes = [
+  {
+    quote: "Those who can imagine anything, can create the impossible.",
+    author: "Alan Turing",
+  },
+  {
+    quote: "Any sufficiently advanced technology is equivalent to magic.",
+    author: "Arthur C. Clarke",
+  },
+];
+
+async function handleQuotes(request: Request) {
+  // Make sure the request is a GET request.
+  const { error } = await validateRequest(request, {
+    GET: {},
+  });
+  // validateRequest populates the error if the request doesn't meet
+  // the schema we defined.
+  if (error) {
+    return json({ error: error.message }, { status: error.status });
+  }
+
+  // Return all the quotes.
+  return json({ quotes });
+}
