@@ -5,7 +5,7 @@ import {
 } from "https://deno.land/x/sift@0.1.7/mod.ts";
 
 serve({
-  "/quotes": handleQuotes,
+  "/quotes": queryFuana,
 });
 
 // To get started, let's just use a global array of quotes.
