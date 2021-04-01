@@ -1,10 +1,9 @@
-import { serve } from "https://deno.land/x/sift@0.1.7/mod.ts";
-import homePage from "./pages/home.jsx";
-import notFoundPage from "./pages/404.jsx";
-import issuesEndpoint from "./pages/api/issues.js";
-
-serve({
-  "/": homePage,
-  "/api/issues": issuesEndpoint,
-  404: notFoundPage,
+addEventListener("fetch", (event) => {
+  // Get the value of the header named `x-forwarded-for`.
+  // The value can either be a IPv4 or IPv6 address.
+  const ip = event.request.headers.get("x-forwarded-for");
+  const response = new Response(`Your IP address is <b>${ip}</b>`, {
+    headers: { "content-type": "text/html" },
+  });
+  event.respondWith(response);
 });
