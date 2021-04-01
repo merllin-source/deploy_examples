@@ -38,7 +38,7 @@ function handleRequest(request) {
     >
       <h1>Return JSON and/or HTML Example</h1>
       <p>
-        <a href="/html">/html</a> - responds with HTML to the request.
+        <a href="/html">/html</a> - responds with HTML ssssssto the request.
       </p>
       <p>
         <a href="/json">/json</a> - responds with JSON to the request.
