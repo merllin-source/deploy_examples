@@ -74,3 +74,22 @@ async function queryFuana(
     return { error };
   }
 }
+
+async function handleQuotes(request: Request) {
+  const { error, body } = await validateRequest(request, {
+    GET: {},
+    POST: {
+      body: ["quote", "author"],
+    },
+  });
+  if (error) {
+    return json({ error: error.message }, { status: error.status });
+  }
+
+  if (request.method === "POST") {
+    
+        return json({ quote, author }, { status: 201 });
+  }
+
+  return json({ quotes });
+}
